@@ -3,12 +3,14 @@ public class Triangle{
     private Point[] corners;
     private int startx;
     private int starty;
+    private double height;
     public boolean upwards;
 
     public Triangle(int startx, int starty, int sideLength, boolean upwards){
         this.startx = startx;
         this.starty = starty;
         this.sideLength = sideLength;
+        this.height = Math.sqrt(3/2) * sideLength;
         this.upwards = upwards;
         corners = new Point[3];
         initializePoints();
@@ -18,9 +20,9 @@ public class Triangle{
         corners[0] = new Point(startx, starty);
         corners[1] = new Point(startx + sideLength, starty);
         if(upwards){
-            corners[2] = new Point(startx + (sideLength/2), starty + (sideLength/2));
+            corners[2] = new Point(startx + (sideLength/2), starty - (int)(height));
         } else {
-            corners[2] = new Point(startx + (sideLength/2), starty - (sideLength/2));
+            corners[2] = new Point(startx + (sideLength/2), starty + (int)(height));
         }
     }
 
@@ -41,6 +43,10 @@ public class Triangle{
 
     public Point[] getPoints(){
         return corners;
+    }
+
+    public double getHeight(){
+        return height;
     }
 
 

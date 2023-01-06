@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.Graphics;
 
 public class Sierpinski implements Fractal{
     ArrayList<Triangle> layers;
@@ -10,6 +11,7 @@ public class Sierpinski implements Fractal{
     public Sierpinski(int iterations){
         this.iterations = iterations;
         layers = new ArrayList<>();
+        calcTriangles();
     }
 
     public void setIterations(int iterations){
@@ -20,8 +22,12 @@ public class Sierpinski implements Fractal{
         return iterations;
     }
 
-    public void drawFractal(){
-
+    public void drawFractal(Graphics g){
+        for(int i = 0; i < layers.size(); i++){
+            g.drawLine(layers.get(i).getPoints()[0].getX(), layers.get(i).getPoints()[0].getY(), layers.get(i).getPoints()[1].getX(), layers.get(i).getPoints()[1].getY());
+            g.drawLine(layers.get(i).getPoints()[0].getX(), layers.get(i).getPoints()[0].getY(), layers.get(i).getPoints()[2].getX(), layers.get(i).getPoints()[2].getY());
+            g.drawLine(layers.get(i).getPoints()[2].getX(), layers.get(i).getPoints()[2].getY(), layers.get(i).getPoints()[1].getX(), layers.get(i).getPoints()[1].getY());
+        }
     }
     
     public void setZoom(double zoom){
@@ -36,18 +42,24 @@ public class Sierpinski implements Fractal{
         if(n == 0){
             return;
         }
-        layers.add(new Triangle(x,y,length,false));
+        Triangle temp = new Triangle(x,y,length,false);
+        layers.add(temp);
 
-        recursiveCalcTriangles(x + x/2, y/2, length/2, n - 1);
-        recursiveCalcTriangles(x/2, y + y/2, length/2, n - 1);
-        recursiveCalcTriangles(2*x + x/2, y + y/2, length/2, n - 1);
+        recursiveCalcTriangles(x + length/4, y - (int)(temp.getHeight()/2), length/2, n - 1);
+        recursiveCalcTriangles(x - length/4, y + (int)(temp.getHeight()/2), length/2, n - 1);
+        recursiveCalcTriangles(x + (3*length)/4, y + (int)(temp.getHeight()/2), length/2, n - 1);
     }
 
     public void calcTriangles(){
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int startCorner = (int)((screenSize.getWidth() - screenSize.getHeight())/2);
-        layers.add(new Triangle(startCorner,(int)(screenSize.getHeight()), (int)(screenSize.getHeight()), true));
-        recursiveCalcTriangles((int)(screenSize.getHeight()/4),(int)(screenSize.getHeight()/2),(int)(screenSize.getHeight()/2),iterations);
+        //layers.add(new Triangle(startCorner,(int)(screenSize.getHeight()), (int)(screenSize.getHeight()), true));
+        //recursiveCalcTriangles((int)(screenSize.getHeight()/4),(int)(screenSize.getHeight()/2),(int)(screenSize.getHeight()/2),iterations);
+
+        Triangle temp = new Triangle(250,750, 525, true);
+        layers.add(temp);
+        recursiveCalcTriangles((int)(250 + 525/4),(int)(750 - (int)(temp.getHeight()/2)),(int)(525/2),iterations);
+        
         return;
     }
 }
