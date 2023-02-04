@@ -34,18 +34,18 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 
-public class fractalDraw extends Canvas{
-
-    public void paint(Graphics g){
-        setForeground(Color.BLACK);
-        setBackground(Color.WHITE);
-        Sierpinski outputSierpinski = new Sierpinski(5);
-        outputSierpinski.drawFractal(g);
-        //g.drawLine(0,0,Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height);
-    }
+public class fractalDraw{
 
     public static void main(String[] args){
-        fractalDraw f = new fractalDraw();
+        SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				new fractalDraw().createAndShowGUI();
+			}
+		});
+    }
+
+    public void createAndShowGUI(){
+        FractalCanvas f = new FractalCanvas(8);
         JFrame frame = new JFrame();
         frame.add(f);
         frame.setSize(Toolkit.getDefaultToolkit().getScreenSize());
