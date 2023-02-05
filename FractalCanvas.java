@@ -2,6 +2,8 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import javax.swing.JFrame;
+
 public class FractalCanvas extends Canvas{
     private int fractalIterations;
 

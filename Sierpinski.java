@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.Graphics;
+import java.lang.Thread;
 
 public class Sierpinski implements Fractal{
     ArrayList<Triangle> layers;
@@ -27,6 +28,12 @@ public class Sierpinski implements Fractal{
             g.drawLine(layers.get(i).getPoints()[0].getX(), layers.get(i).getPoints()[0].getY(), layers.get(i).getPoints()[1].getX(), layers.get(i).getPoints()[1].getY());
             g.drawLine(layers.get(i).getPoints()[0].getX(), layers.get(i).getPoints()[0].getY(), layers.get(i).getPoints()[2].getX(), layers.get(i).getPoints()[2].getY());
             g.drawLine(layers.get(i).getPoints()[2].getX(), layers.get(i).getPoints()[2].getY(), layers.get(i).getPoints()[1].getX(), layers.get(i).getPoints()[1].getY());
+            /*if(i%3 == 0){
+                try{
+                    Thread.sleep(1000);
+                }catch(Exception e){
+                }
+            }*/
         }
     }
     

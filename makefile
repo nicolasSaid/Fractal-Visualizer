@@ -1,7 +1,7 @@
-all: fractalDraw.java
+all: fractalDraw
 
 
-fractalDraw.java : fractalDraw.class
+fractalDraw : fractalDraw.class
 	java fractalDraw
 
 fractalDraw.class : fractalDraw.java Fractal.java FractalCanvas.class Sierpinski.class
