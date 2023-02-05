@@ -1,3 +1,4 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -59,41 +60,43 @@ public class fractalDraw{
     public void addMenuBar(JFrame framePassed){
         JMenuBar menuBars = new JMenuBar();
 
-        JMenu fractalPrompt = new JMenu("Fractal");
+        JMenu options = new JMenu("Options");
+        
+
+        JMenuItem fractalPrompt = new JMenuItem("Fractal");
         fractalPrompt.setMnemonic(KeyEvent.VK_F);
         fractalPrompt.addActionListener(new MenuItemActionListener(fractalPrompt, framePassed));
 
-        JMenu drawPanel = new JMenu("Paint");
+        JMenuItem drawPanel = new JMenuItem("Paint");
         drawPanel.setMnemonic(KeyEvent.VK_P);
         drawPanel.addActionListener(new MenuItemActionListener(drawPanel, framePassed));
 
-        JMenu colorPanel = new JMenu("Color");
+        JMenuItem colorPanel = new JMenuItem("Color");
         colorPanel.setMnemonic(KeyEvent.VK_C);
         colorPanel.addActionListener(new MenuItemActionListener(colorPanel, framePassed));
 
-        JMenu creditPanel = new JMenu("About Me");
+        JMenuItem creditPanel = new JMenuItem("About Me");
         creditPanel.setMnemonic(KeyEvent.VK_A);
         creditPanel.addActionListener(new MenuItemActionListener(creditPanel, framePassed));
 
-        JMenu exit = new JMenu("Exit");
+        JMenuItem exit = new JMenuItem("Exit");
         exit.setMnemonic(KeyEvent.VK_E);
         exit.addActionListener(new MenuItemActionListener(exit, framePassed));
 
 
-        menuBars.add(fractalPrompt);
-        menuBars.add(drawPanel);
-        menuBars.add(colorPanel);
-        menuBars.add(creditPanel);
-        menuBars.add(exit);
+        menuBars.add(options);
+
+        options.add(fractalPrompt);
+        options.add(drawPanel);
+        options.add(colorPanel);
+        options.add(creditPanel);
+        options.add(exit);
 
         framePassed.setJMenuBar(menuBars);
 
     }
 
     public void fractalPrompt(JFrame prev){
-        if(prev != null){
-            JOptionPane.showMessageDialog(null, "Entered");
-        }
         JFrame frame = new JFrame();
         addMenuBar(frame);
 
@@ -107,7 +110,7 @@ public class fractalDraw{
 
 
         JPanel labelPanel = new JPanel();
-        JLabel prompt = new JLabel("Enter the number of iterations for Sierpinski's Triangle (1-9)", SwingConstants.CENTER);
+        JLabel prompt = new JLabel("Enter the number of iterations for Sierpinski's Triangle (1-8)", SwingConstants.CENTER);
         //Dimension promptsize = new Dimension(50, 200);
         //prompt.setPreferredSize(promptsize);
         prompt.setFont(new Font("Verdana", Font.BOLD, 32));
@@ -154,6 +157,62 @@ public class fractalDraw{
         prev.dispose();
     }
 
+    public void showAboutMe(JFrame prev){
+        JFrame frame = new JFrame();
+        addMenuBar(frame);
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        //GRIDBADCONSTRAINTS
+        //GridBagConstraints header = new GridBagConstraints();
+        //header.insets = new Insets(20,0,20,0);
+        //
+
+        JPanel layoutPanel = new JPanel();
+        BoxLayout boxLayout = new BoxLayout(layoutPanel, BoxLayout.Y_AXIS);
+        layoutPanel.setLayout(boxLayout);
+        layoutPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        layoutPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        //JPanel promptPanel = new JPanel();
+        JLabel prompt = new JLabel("<html>TEMP</html>");
+        //promptPanel.setPreferredSize(new Dimension(50,10));
+        prompt.setVerticalAlignment(JLabel.TOP);
+        prompt.setHorizontalAlignment(JLabel.CENTER);
+        prompt.setFont(new Font("Verdana", Font.BOLD, 36));
+        prompt.setBorder(new EmptyBorder(50,0,20,0));
+        /*Border border = prompt.getBorder();
+        Border margin = new EmptyBorder(100,100,0,100);
+        prompt.setBorder(new CompoundBorder(border, margin));*/
+        layoutPanel.add(prompt);
+
+        //JPanel descPanel = new JPanel();
+        JLabel desc = new JLabel("<html>TEMP DESC<br>TEMP DESC<br>TEMP DESC<br>TEMP DESC<br>TEMP DESC<br>TEMP DESC</html>");
+     
+        desc.setVerticalAlignment(JLabel.TOP);
+        desc.setHorizontalAlignment(JLabel.CENTER);
+        desc.setFont(new Font("Verdana", Font.PLAIN, 14));
+        desc.setBorder(new EmptyBorder(0,0,475,0));
+
+        layoutPanel.add(desc);
+
+
+        JLabel link = new JLabel("<html>link placeholder</html>");
+        link.setVerticalAlignment(JLabel.BOTTOM);
+        link.setHorizontalAlignment(JLabel.CENTER);
+        link.setFont(new Font("Verdana", Font.PLAIN, 10));
+
+        layoutPanel.add(link);
+
+
+        
+
+        frame.setContentPane(layoutPanel);
+        frame.setSize(Toolkit.getDefaultToolkit().getScreenSize());
+        frame.setVisible(true);
+        prev.dispose();
+    }
+
 
     class ButtonActionListener implements ActionListener {
 		// the button associated with the action listener, so that we can
@@ -169,10 +228,10 @@ public class fractalDraw{
 		public void actionPerformed(ActionEvent e) {
 			try{
                 int iter = Integer.parseInt(input.getText());
-                if(iter >= 0 && iter < 10){
+                if(iter >= 0 && iter <= 8){
                     showFractal(iter, previous);
                 }else{
-                    JOptionPane.showMessageDialog(null, "Integer must be from 0 to 9");
+                    JOptionPane.showMessageDialog(null, "Integer must be from 0 to 8");
                 }
             }catch(Exception ex){
                 JOptionPane.showMessageDialog(null, "Please input an Integer");
@@ -190,10 +249,14 @@ public class fractalDraw{
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-            JOptionPane.showMessageDialog(null, "bye");
 			if(mi.getText().toLowerCase().equals("fractal")) {
-                JOptionPane.showMessageDialog(null, "hi");
                 fractalPrompt(current);
+			}
+            else if(mi.getText().toLowerCase().equals("exit")) {
+                current.dispatchEvent(new WindowEvent(current, WindowEvent.WINDOW_CLOSING));
+			}
+            else if(mi.getText().toLowerCase().equals("about me")) {
+                showAboutMe(current);
 			}
 		}
 	}
