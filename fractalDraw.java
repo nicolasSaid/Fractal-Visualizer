@@ -51,10 +51,6 @@ public class fractalDraw{
         fractalPrompt.setMnemonic(KeyEvent.VK_F);
         fractalPrompt.addActionListener(new MenuItemActionListener(fractalPrompt, framePassed));
 
-        JMenuItem drawPanel = new JMenuItem("Paint");
-        drawPanel.setMnemonic(KeyEvent.VK_P);
-        drawPanel.addActionListener(new MenuItemActionListener(drawPanel, framePassed));
-
         JMenuItem colorPanel = new JMenuItem("Color");
         colorPanel.setMnemonic(KeyEvent.VK_C);
         colorPanel.addActionListener(new MenuItemActionListener(colorPanel, framePassed));
@@ -71,7 +67,6 @@ public class fractalDraw{
         menuBars.add(options);
 
         options.add(fractalPrompt);
-        options.add(drawPanel);
         options.add(colorPanel);
         options.add(creditPanel);
         options.add(exit);
