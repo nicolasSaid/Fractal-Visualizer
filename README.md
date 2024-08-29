@@ -1,4 +1,7 @@
 # Fractal-Visualizer
+
+Adding new information!
+
 Visualizes fractals of n iterations using Java Swing
 
 Class Structure:
